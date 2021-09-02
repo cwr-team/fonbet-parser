@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <title>Fonbet Parser</title>
+    <meta charset="utf-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+  </head>
+  <body>
+    <div id="app">
+      <div class="spinner-grow" role="status" style="position:absolute; top:50%; left:50%;">
+        <span class="sr-only"></span>
+      </div>
+      <div class="container" style="background:white;">
+        <div class="card mt-3" v-for="item in dataset">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-8">
+                <h5 class="card-title">{{ item.Event_name }}</h5>
+                <span class="timer"><i class="bi bi-alarm"></i> {{ item.Event_timer }}</span>
+                <p><i class="bi bi-file-person"></i> {{ item.Event_team1 }}</span> - <span class="team2"><i class="bi bi-file-person"></i> {{ item.Event_team2 }}</p>
+              </div>
+              <div class="col-md-4 text-end">
+                <p>Общий счёт: {{ item.Event_scores[0][0].c1 }} - {{ item.Event_scores[0][0].c2 }}</p>
+                <p v-for="(score, index) in item.Event_scores[1]"> {{ index+1 }} тайм: {{ score.c1 }} - {{ score.c2 }}</p>
+              </div>
+            </div>
+
+              <div class="totals row">
+                <div class="card" v-for="item_total in item.Event_total">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p>Тотал</p>
+                        <p class="mb-0">{{ item_total.Value }}</p>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="row">
+                          <div class="col-md-6"><p>Меньше</p><p class="mb-0"> {{ item_total.Low }}</p></div>
+                          <div class="col-md-6"><p>Больше</p><p class="mb-0"> {{ item_total.High }}</p></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="odds row">
+                <div class="card col-md-6" v-for="item_odds in item.Event_odds">
+                  <div class="card-body">
+                    <p>Команда: {{ item_odds.Team }}</p>
+                    <p>Фора: {{ item_odds.Value }}</p>
+                    <p>Значение: {{ item_odds.Quote }}</p>
+                  </div>
+                </div>
+              </div>
+            <a v-bind:href="item.Event_link" class="btn btn-primary mt-2">Открыть на fonbet</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <script type="text/javascript" charset="utf-8" src="js/axios.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+  </body>
+</html>
